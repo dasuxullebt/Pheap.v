@@ -351,7 +351,7 @@ Lemma merge_pairs_lemma :
     Exists (pheap_in b) l -> pheap_in b (merge_pairs cmp l).
 Proof.
   intros A cmp.
-
+  
   refine (fix f l b x :=
             match l as L return l=L->_ with
               | nil => fun eq => _
@@ -370,10 +370,12 @@ Proof.
   simpl;
   erewrite <- merge_spec;
   erewrite <- merge_spec;
-  rewrite -> eq in x;
+  rewrite -> eq in x.
+
+  
   inversion x;
   [ auto
-  | match goal with | X : Exists _ (b :: l') |- _ => inversion X end;
+  | match goal with | X : Exists _ (?B :: l') |- _ => inversion X end;
     auto;
     apply or_intror;
     apply f;
